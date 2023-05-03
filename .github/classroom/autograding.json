@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Hardhat Test Passing",
+      "setup": "yarn install",
+      "run": "yarn hardhat:test",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    }
+  ]
+}
