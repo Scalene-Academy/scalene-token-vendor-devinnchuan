@@ -20,39 +20,40 @@ const deployVendor: DeployFunction = async function (hre: HardhatRuntimeEnvironm
   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { deployer } = await hre.getNamedAccounts();
-  // const { deploy } = hre.deployments;
+  const { deploy } = hre.deployments;
 
-  // const yourToken = await hre.ethers.getContract("YourToken", deployer);
+  const yourToken = await hre.ethers.getContract("YourToken", deployer);
 
-  // // @TODO: deploy the vendor contract
-  // await deploy("Vendor", {
-  //   from: deployer,
-  //   // Contract constructor arguments
-  //   args: [yourToken.address],
-  //   log: true,
-  //   // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-  //   // automatically mining the contract deployment transaction. There is no effect on live networks.
-  //   autoMine: true,
-  // });
+  // @TODO: deploy the vendor contract
+  await deploy("Vendor", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [yourToken.address],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
 
-  // // Get the deployed contract
-  // const vendor = await hre.ethers.getContract("Vendor", deployer);
+  // Get the deployed contract
+  const vendor = await hre.ethers.getContract("Vendor", deployer);
 
-  // // @TODO: transfer the tokens to the vendor
-  // console.log("\n 🏵  Sending all 1000 tokens to the vendor...\n");
+  // @TODO: transfer the tokens to the vendor
+  console.log("\n 🏵  Sending all 1000 tokens to the vendor...\n");
 
-  // const transferTransaction = await yourToken.transfer(vendor.address, hre.ethers.utils.parseEther("1000"));
+  const transferTransaction = await yourToken.transfer(vendor.address, hre.ethers.utils.parseEther("1000"));
 
-  // console.log("\n    confirming...\n");
-  // await transferTransaction.wait();
-  // console.log("\n   ✅ confirmed!\n");
+  console.log("\n    confirming...\n");
+  await transferTransaction.wait();
+  console.log("\n   ✅ confirmed!\n");
 
-  // // @TODO: change address to your frontend address
-  // console.log("\n 🤹  Sending ownership to frontend address...\n");
-  // const ownershipTransaction = await vendor.transferOwnership(yourFrontendAddress);
-  // console.log("\n    confirming...\n");
-  // await ownershipTransaction.wait();
-  // console.log("\n   ✅ confirmed!\n");
+  // @TODO: change address to your frontend address
+  const frontendAddress = "0x382F45DC65ABA008E7dfc24F08b50754fdE2B15e";
+  console.log("\n 🤹  Sending ownership to frontend address...\n");
+  const ownershipTransaction = await vendor.transferOwnership(frontendAddress);
+  console.log("\n    confirming...\n");
+  await ownershipTransaction.wait();
+  console.log("\n   ✅ confirmed!\n");
 };
 
 export default deployVendor;
